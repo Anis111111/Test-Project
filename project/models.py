@@ -1,47 +1,37 @@
 from django.db import models
 from django.contrib.auth.models import User
 from professor.models import Professor 
+from django.core.exceptions import ValidationError
+
 import importlib
 
 def get_student_model():
     students_models = importlib.import_module('students.models')
     return students_models.Student
 
-# Create your models here.
-
-class ProjectStatus(models.TextChoices):
-    DONE = "Done"
-    IN_PROCESSING = "In_Processing"
-    BACK_IN_THE_LOG = "Back_In_The_Log"
-
-class Category(models.TextChoices):
-    WEBS = 'Webs'
-    PROGRAMS = 'Program'
-    APPS = 'Apps'
-    AI = 'AI'
-    FULL_STACK = 'Full_stack'
-
-# class Project(models.Model):
-#     id = models.IntegerField(default = 0, primary_key=True)
-
-#     # doctor = models.ForeignKey(Doctor , null=True , on_delete = models.PROTECT)
-#     # user = models.ForeignKey(User , null=True , on_delete=models.PROTECT)
-
-#     title = models.CharField(max_length = 200 , default = "" ,blank = False)
-#     project_status = models.CharField(max_length = 30 ,default = "" ,blank = False , choices=ProjectStatus)
-#     descripthion = models.TextField(max_length = 1000 , default = "" ,blank = False)
-
-#     category = models.CharField(max_length = 50 , default = "" ,blank = False , choices=Category)
-#     ratings  = models.DecimalField(max_digits=5 , default=0 , decimal_places=1 )
-
-#     createAt = models.DateTimeField(auto_now_add = True)
-
-#     def __str__(self):
-#         return self.title
-
-from django.core.exceptions import ValidationError
 
 class Project(models.Model):
+
+    STATUS_CHOICES = (
+        ('todo', 'To Do'),
+        ('in_progress', 'In Progress'),
+        ('done', 'Done'),
+        ('backlog', 'Backlog'),
+    )
+    TYPE_CHOICES = (
+        ('web', 'Web'),
+        ('desktop', 'Desktop Program'),
+        ('ai', 'AI Program'),
+        ('full_stack', 'Full Stack App'),
+        ('mobile', 'Mobile App'),
+    )
+
+    # add project type
+    project_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='web', verbose_name='project type')
+
+    # add status for project
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='backlog', verbose_name='status')
+
     title = models.CharField(max_length=200, db_index=True)
     description = models.TextField()
     idea = models.TextField(unique=True)

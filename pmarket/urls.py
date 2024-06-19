@@ -19,9 +19,10 @@ from django.urls import path,include
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 urlpatterns = [
+    path('accounts/',include('django.contrib.auth.urls')),  
+    
     path('admin/', admin.site.urls),
     path('api/', include('project.urls')),
-    path('api/', include('accounts.urls')),
     path('api/', include('students.urls')),
     path('api/', include('professor.urls')),
     path('api/', include('chat.urls')),
