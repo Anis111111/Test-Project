@@ -1,19 +1,19 @@
-from django.shortcuts import render, get_object_or_404 ,redirect
+from django.shortcuts import render , get_object_or_404 , redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate , login
 
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view , permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-from datetime import datetime, timedelta
+from datetime import datetime , timedelta
 
-from .serializers import SingUpSerializer, UserSerializer
-from .forms import SignupForm ,UserForm ,ProfileForm
+from .serializers import SingUpSerializer , UserSerializer
+from .forms import SignupForm , UserForm , ProfileForm
 from .models import Profile
 
 # Create your views here.

@@ -173,3 +173,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ORIGIN_ALLOW_ALL = True # new for chat
+
+LOGIN_REDIRECT_URL = '/accounts/profile/' # new 
+
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]# new for email login
