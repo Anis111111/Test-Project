@@ -52,23 +52,5 @@ def save_profile(sender, instance, created, **kwargs):
         Profile.objects.create(
             user =  instance
         )
-        # profile = Profile(user = user)
-        # profile.save()
     else:
         pass
-
-
-    # # Ensure that 'user' is a User instance
-    # if isinstance(user, User):
-    #     self.user = user
-    #     self.save()
-    # else:
-    #         # If 'user' is not a User instance, try to get the User instance
-    #         try:
-    #             user_instance = User.objects.get(username=user)
-    #             self.user = user_instance
-    #             self.save()
-    #         except User.DoesNotExist:
-    #             pass
-    #         # Handle the case where 'user' is not a User instance
-    #         # You can raise an error or handle it based on your requirements
