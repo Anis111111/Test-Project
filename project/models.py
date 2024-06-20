@@ -19,19 +19,17 @@ class Project(models.Model):
         ('mobile', 'Mobile App'),
     )
 
+    title = models.CharField(max_length=200, db_index=True)
+    description = models.TextField()
+    idea = models.TextField(unique=True)
+
     # add project type
     project_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='web', verbose_name='project type')
 
     # add status for project
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='backlog', verbose_name='status')
 
-    title = models.CharField(max_length=200, db_index=True)
-    description = models.TextField()
-    idea = models.TextField(unique=True)
-
-    # professor = models.ForeignKey(Professor, related_name='projects', on_delete=models.SET_NULL, null=True)
-    # students = models.ManyToManyField(get_student_model(), related_name='projects')
-    
+    is_published = models.BooleanField(default=False, verbose_name='Is Published')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

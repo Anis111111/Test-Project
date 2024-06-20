@@ -51,8 +51,7 @@ class Student(models.Model):
     SPECIALIZATIONS = (
         ('networks', 'networks'),
         ('software', 'software'),
-    )
-    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    ) 
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
     university_id = models.CharField(max_length=20, unique=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', max_length=1 * 1024 * 1024)

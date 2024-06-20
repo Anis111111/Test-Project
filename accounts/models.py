@@ -12,53 +12,63 @@ from django.core.validators import RegexValidator, MinValueValidator, MaxValueVa
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User , related_name = 'profile' , on_delete = models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     
-    # reset_password_token = models.CharField(max_length = 50 , default = "" , null = True ,blank = True)
-    # reset_password_expire = models.DateTimeField(null = True , blank = True)
-    # id = models.IntegerField(default = 0 , primary_key=True ,auto_created=True)
+    # reset_password_token = models.CharField(max_length=50, default="", null=True, blank=True)
+    # reset_password_expire = models.DateTimeField(null=True, blank=True)
+    # id = models.IntegerField(default=0, primary_key=True, auto_created=True)
     
-    img = models.ImageField(upload_to = 'photos/' , height_field='height', width_field='width' , null=True , blank=True) # user_upload_to
-    height = models.PositiveIntegerField(default=5)
-    width = models.PositiveIntegerField(default=5)
+    img = models.ImageField(upload_to='photos/', height_field='height', width_field='width', null=True, blank=True)  # user_upload_to
+    height = 5 # models.PositiveIntegerField(default=5)
+    width = 5 # models.PositiveIntegerField(default=5)
 
-    phone = models.CharField(max_length = 20 , null = True, unique=True,
-    validators=[
-        RegexValidator(
-            regex=r'^\d{20}$',
-            message='The phone must be 20 numbers long.',
-            code='invalid_phone'
-        ),
-    ] )
-
-    # email = models.EmailField(max_length=75, null = False,blank=False, unique=True)
-    personal_email = models.EmailField(unique=True)
-    age = models.IntegerField(
+    phone = models.CharField(max_length=10, null=True, unique=True,
+                            validators=[
+                                RegexValidator(
+                                                regex=r'^\d{10}$',
+                                                message='The phone must be 10 numbers long.',
+                                                code='invalid_phone'
+                                ),
+                            ])
+    address = models.CharField(max_length=50 , blank=True,null=True)
+    age = models.PositiveIntegerField(default=19,
         validators=[
-            MinValueValidator(18),
-            MaxValueValidator(100)
+                    MinValueValidator(19),
+                    MaxValueValidator(80)
         ],
         help_text="The age must be between 18 and 100 years."
     )
-    date_created = models.DateTimeField(auto_now_add = True)
+    date_created = models.DateTimeField(auto_now_add=True)
     
     # def user_upload_to(instance, filename):
     #     return f'users/{instance.user.username}/{filename}'
 
     def __str__(self):
-        return self.name
+        return str(self.user)
 
-
-@receiver(post_save, sender=Profile)
+@receiver(post_save, sender=User)
 def save_profile(sender, instance, created, **kwargs):
-    
-    print('instance',instance)
-    user =  instance
-
     if created:
-        profile = Profile(user = user)
-        profile.save()
+        Profile.objects.create(
+            user =  instance
+        )
+        # profile = Profile(user = user)
+        # profile.save()
     else:
         pass
 
 
+    # # Ensure that 'user' is a User instance
+    # if isinstance(user, User):
+    #     self.user = user
+    #     self.save()
+    # else:
+    #         # If 'user' is not a User instance, try to get the User instance
+    #         try:
+    #             user_instance = User.objects.get(username=user)
+    #             self.user = user_instance
+    #             self.save()
+    #         except User.DoesNotExist:
+    #             pass
+    #         # Handle the case where 'user' is not a User instance
+    #         # You can raise an error or handle it based on your requirements
