@@ -50,8 +50,8 @@ INSTALLED_APPS = [
     'import_export',   # new 
     'corsheaders',   # new 
 
-    'rest_framework_simplejwt', # new 
     'rest_framework', # new 
+    'rest_framework_simplejwt', # new 
     'rest_framework.authtoken', # new 
     'dj_rest_auth', # new 
     'dj_rest_auth.registration', # new

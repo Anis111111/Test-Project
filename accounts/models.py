@@ -4,19 +4,13 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save ,pre_save
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 
-# Create your models here.
-
-# class PaymentMode(models.TextChoices):
-#     COD = "COD"
-#     CARD = "CARD"
-
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     
-    # reset_password_token = models.CharField(max_length=50, default="", null=True, blank=True)
-    # reset_password_expire = models.DateTimeField(null=True, blank=True)
-    # id = models.IntegerField(default=0, primary_key=True, auto_created=True)
+    reset_password_token = models.CharField(max_length=50, default="", null=True, blank=True)
+    reset_password_expire = models.DateTimeField(null=True, blank=True)
+    id = models.IntegerField(default=0, primary_key=True, auto_created=True)
     
     img = models.ImageField(upload_to='photos/', height_field='height', width_field='width', null=True, blank=True)  # user_upload_to
     height = 5 # models.PositiveIntegerField(default=5)

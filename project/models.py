@@ -39,10 +39,10 @@ class Project(models.Model):
 
 
 class Review(models.Model):
-    project = models.ForeignKey(Project , null = True , on_delete = models.CASCADE , related_name = 'reviews')
-
     # user = models.ForeignKey(User , null = True , on_delete = models.SET_NULL)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, db_index=True)
+
+    project = models.ForeignKey(Project , null = True , on_delete = models.CASCADE , related_name = 'reviews')
 
     comment = models.TextField(max_length = 1000 , default = "" , blank = False)
     createAt = models.DateTimeField(auto_now_add = True)

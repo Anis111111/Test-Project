@@ -54,7 +54,6 @@ class Student(models.Model):
     ) 
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
     university_id = models.CharField(max_length=20, unique=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', max_length=1 * 1024 * 1024)
     group = models.OneToOneField(StudentGroup, on_delete=models.CASCADE, related_name='student')
     specialization = models.CharField(max_length=50, choices=SPECIALIZATIONS, default='software', verbose_name='specialization')
 

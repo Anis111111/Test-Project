@@ -20,7 +20,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 urlpatterns = [
     path('accounts/',include('django.contrib.auth.urls')),  
-    path('accounts/',include('accounts.urls',namespace = 'accounts')),  
+    path('api/',include('accounts.urls',namespace = 'accounts')),  
     
     path('admin/', admin.site.urls),
     path('api/', include('project.urls')),
@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/', include('chat.urls')),
     path('api/token/', TokenObtainPairView.as_view()),
 
+    path('api-auth/', include('rest_framework.urls')),
     path('api/rest-auth/', include('dj_rest_auth.urls')),
     path('api/rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 
