@@ -34,6 +34,11 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1']
 INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',   # new
     
+    'django.contrib.sites', # new for user auth api
+    'allauth', # new for user auth api
+    'allauth.account', # new for user auth api
+    # 'allauth.socialaccount', # new for user auth api
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,15 +56,10 @@ INSTALLED_APPS = [
     'corsheaders',   # new 
 
     'rest_framework', # new 
-    'rest_framework_simplejwt', # new 
-    'rest_framework.authtoken', # new 
-    'dj_rest_auth', # new 
-    'dj_rest_auth.registration', # new
-
-    'django.contrib.sites', # new
-    'allauth', # new
-    'allauth.account', # new
-    'allauth.socialaccount', # new
+    'rest_framework_simplejwt', # new for user auth api
+    'rest_framework.authtoken', # new for user auth api 
+    'dj_rest_auth', # new for user auth api 
+    'dj_rest_auth.registration', # new for user auth api
 ]
 
 SITE_ID = 1

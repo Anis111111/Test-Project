@@ -1,9 +1,9 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render , get_object_or_404
 
 from rest_framework.decorators import api_view , permission_classes
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from rest_framework.permissions import IsAuthenticated , IsAdminUser
 from rest_framework import status
 
 from .serializers import ProjectSerializer , ReviewSerializer
@@ -20,7 +20,7 @@ from django.db.models import Avg
 @api_view(['GET'])
 def get_all_projects(request):
     # project = Project.objects.all() # for delete
-    filterset = ProjectFilter(request.GET,queryset=Project.objects.all().order_by('id'))
+    filterset = ProjectFilter(request.GET , queryset=Project.objects.all().order_by('id'))
 
     count = filterset.qs.count()
     resPage = 10
@@ -30,7 +30,7 @@ def get_all_projects(request):
     queryset = paginator.paginate_queryset(filterset.qs,request)
 
     # serializer = ProjectSerializer(project , many = True) # for delete
-    serializer = ProjectSerializer(queryset , many = True)
+    serializer = ProjectSerializer(queryset , many = True , context={"request":request} )
     # print(project) # for delete
     
     return Response({"project":serializer.data, "per page": resPage , "count":count})
@@ -39,8 +39,8 @@ def get_all_projects(request):
 @api_view(['GET'])
 def get_by_id(request,pk):
 
-    project =get_object_or_404(Project,id = pk)
-    serializer = ProjectSerializer(project,many = False)
+    project =get_object_or_404(Project , id = pk)
+    serializer = ProjectSerializer(project , many = False , context={"request":request} )
     print(project)
     return Response({"project":serializer.data})
 
@@ -54,7 +54,7 @@ def new_project(request):
 
     if serializer.is_valid():
         project = Project.objects.create(**data,user = request.user)
-        res = ProjectSerializer(project,many = False)
+        res = ProjectSerializer(project , many = False , context={"request":request})
         return Response({"project":res.data})
     else:
         return Response(serializer.errors)
@@ -82,7 +82,7 @@ def update_project(request , pk):
 
     project.save()
 
-    serializer = ProjectSerializer(project,many = False)
+    serializer = ProjectSerializer(project , many = False , context={"request":request})
     return Response({"project":serializer.data})
 
 

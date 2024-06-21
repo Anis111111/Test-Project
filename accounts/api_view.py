@@ -8,7 +8,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view , permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import status , generics
+from rest_framework import status 
 
 from datetime import datetime , timedelta
 
@@ -49,7 +49,7 @@ def register(request):
 @permission_classes([IsAuthenticated])
 def current_user(request):
 
-    user = UserSerializer(request.user, many=False)
+    user = UserSerializer(request.user, many=False, context={"request":request})
     return Response(user.data)
 
 
@@ -69,7 +69,7 @@ def update_user(request):
         user.password = make_password(data["password"])
 
     user.save()
-    serializer = UserSerializer(user, many=False)
+    serializer = UserSerializer(user, many=False, context={"request":request})
     return Response(serializer.data)
 
 
@@ -147,7 +147,7 @@ def reset_password(request, token):
     user.profile.reset_password_token = ""
     user.profile.reset_password_expire = None
     user.profile.save()
-    
+
     user.save()
 
     return Response({"details": "password reset done"})

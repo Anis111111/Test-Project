@@ -26,7 +26,7 @@ def get_all_students(request):
 
     queryset = paginator.paginate_queryset(filterset.qs , request)
 
-    serializer = StudentSerializer(queryset , many = True)
+    serializer = StudentSerializer(queryset , many = True, context={"request":request})
 
     return Response({"student":serializer.data , "per page": resPage , "count":count})
 
@@ -35,7 +35,7 @@ def get_all_students(request):
 def get_by_id(request,pk):
     
     student =get_object_or_404(Student , id = pk)
-    serializer = StudentSerializer(student , many = False)
+    serializer = StudentSerializer(student , many = False, context={"request":request})
     print(student)
     return Response({"student":serializer.data})
 
@@ -49,7 +49,7 @@ def new_student(request):
 
     if serializer.is_valid():
         student = Student.objects.create(**data , user = request.user)
-        res = StudentSerializer(student , many = False)
+        res = StudentSerializer(student , many = False, context={"request":request})
         return Response({"student":res.data})
     else:
         return Response(serializer.errors)
@@ -75,7 +75,7 @@ def update_student(request , pk):
 
     student.save()
 
-    serializer = StudentSerializer(student , many = False)
+    serializer = StudentSerializer(student , many = False, context={"request":request})
     return Response({"student":serializer.data})
 
 
