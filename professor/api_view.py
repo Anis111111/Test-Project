@@ -15,11 +15,13 @@ from .serializers import ProfessorSerializer
 class ProfessorsAPIList(ListCreateAPIView):
     queryset = Professor.objects.all()
     serializer_class = ProfessorSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class ProfessorsAPIDetail(RetrieveUpdateDestroyAPIView):
     queryset = Professor.objects.all()
     serializer_class = ProfessorSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # @api_view(['GET'])

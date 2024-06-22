@@ -18,6 +18,7 @@ from django.db.models import Avg
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_all_projects(request):
     # project = Project.objects.all() # for delete
     filterset = ProjectFilter(request.GET , queryset=Project.objects.all().order_by('id'))
@@ -37,6 +38,7 @@ def get_all_projects(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_by_id(request,pk):
 
     project =get_object_or_404(Project , id = pk)

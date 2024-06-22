@@ -1,8 +1,8 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render , get_object_or_404
 from rest_framework.decorators import api_view , permission_classes
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from rest_framework.permissions import IsAuthenticated , IsAdminUser
 from rest_framework import status
 
 from .filters import StudentFilter
@@ -15,6 +15,7 @@ from django.db.models import Avg
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_all_students(request):
 
     filterset = StudentFilter(request.GET,queryset=Student.objects.all().order_by('id'))
@@ -32,6 +33,7 @@ def get_all_students(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_by_id(request,pk):
     
     student =get_object_or_404(Student , id = pk)
@@ -41,7 +43,7 @@ def get_by_id(request,pk):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated , IsAdminUser])
+@permission_classes([IsAuthenticated])
 def new_student(request):
 
     data = request.data
@@ -56,7 +58,7 @@ def new_student(request):
 
 
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated , IsAdminUser])
+@permission_classes([IsAuthenticated])
 def update_student(request , pk):
 
     student = get_object_or_404(Student , id = pk)
